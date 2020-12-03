@@ -30,7 +30,7 @@ class UserProfileManager(BaseUserManager):
 
         user.is_superuser = True
         user.is_staff = True
-        user.save(using=_db)
+        user.save(using=self._db)
 
         return user
 
@@ -54,7 +54,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         """"Retrive short name of user"""
-        return self.short
+        return self.name
 
     def __str__(self):
         """Return string representation of our user"""

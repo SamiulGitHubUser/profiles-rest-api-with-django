@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status #list of HTTP status code, like 200, 400, 404 ect
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
 
 from profiles_api import serializers #What data to expect when making post put and patch request
 from profiles_api import models
@@ -100,5 +101,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
 
+    #Add authentication and permissions for updating user profile
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
+
+    #Search feature with filters
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name', 'email',)
